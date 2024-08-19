@@ -65,6 +65,9 @@ cdk.context.json
 # AWS SAM build directory
 .aws-sam/
 
+# Environments
+.Environment/
+
 # AWS Amplify files
 amplify/
 aws-exports.js
@@ -84,3 +87,13 @@ aws-exports.js
 
 # Ignore any file with 'key' in the name
 *key*
+
+#Ignore any file with 'password' in the name
+*password*
+
+# Ignore any file with 'token' in the name
+*token*
+
+# Ignore any file with 'cert' in the name
+*cert*
+
