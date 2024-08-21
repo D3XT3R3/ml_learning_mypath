@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../login.cognito/domain.login/auth.service';
+import { AuthService } from '../domain.login/auth.service';
 
 @Component({
   selector: 'app-login',

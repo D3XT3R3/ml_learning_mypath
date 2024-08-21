@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Observable, from } from "rxjs";
-import { map } from "rxjs/operators";
 import {
     CognitoIdentityProviderClient, 
     InitiateAuthCommand,
@@ -9,7 +8,7 @@ import {
     GetUserCommand,
     GlobalSignOutCommandOutput,
     } from "@aws-sdk/client-cognito-identity-provider";
-    import { environment } from "../../environments/environments";
+    import { environment } from "../../../environments/environments";
 
 
 @Injectable({
