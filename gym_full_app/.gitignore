@@ -1,0 +1,99 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# AWS credentials
+.aws/credentials
+.aws/config
+
+# Environment variables file
+.env
+
+# AWS CLI output files
+aws-cli-output.json
+aws-cli-output.txt
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# CDK context files
+cdk.context.json
+
+# Serverless Framework files
+.serverless/
+
+# AWS SAM build directory
+.aws-sam/
+
+# Environments
+.Environment/
+
+# AWS Amplify files
+amplify/
+aws-exports.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# CloudFormation template
+*.template
+*.yaml
+*.yml
+
+# Ignore any file with 'secret' in the name
+*secret*
+
+# Ignore any file with 'key' in the name
+*key*
+
+#Ignore any file with 'password' in the name
+*password*
+
+# Ignore any file with 'token' in the name
+*token*
+
+# Ignore any file with 'cert' in the name
+*cert*
+
