@@ -1,0 +1,70 @@
+import boto3
+import json
+import time
+from boto3.dynamodb.conditions import Attr
+from config import *
+
+# Create AWS clients
+source_dynamodb = boto3.client('dynamodb', region_name=SOURCE_REGION)
+destination_dynamodb = boto3.client('dynamodb', region_name=DESTINATION_REGION)
+s3_client = boto3.client('s3', region_name=DESTINATION_REGION)
+
+def extract_data(table_name, dynamodb_client):
+    """Extract data from the source DynamoDB table"""
+    items = []
+    scan_kwargs = {'TableName': table_name}
+    done = False
+    start_key = None
+    while not done:
+        if start_key:
+            scan_kwargs['ExclusiveStartKey'] = start_key
+        response = dynamodb_client.scan(**scan_kwargs)
+        items.extend(response.get('Items', []))
+        start_key = response.get('LastEvaluatedKey', None)
+        done = start_key is None
+    return items
+
+def load_data_to_dynamodb(items, table_name, dynamodb_client):
+    """Load data into the destination DynamoDB table"""
+    for item in items:
+        dynamodb_client.put_item(TableName=table_name, Item=item)
+
+def upload_to_s3(items, bucket_name, key_prefix):
+    """Upload data to S3 in batches"""
+    for i in range(0, len(items), BATCH_SIZE):
+        batch = items[i:i+BATCH_SIZE]
+        batch_key = f"{key_prefix}batch_{i//BATCH_SIZE}.json"
+        s3_client.put_object(
+            Bucket=bucket_name,
+            Key=batch_key,
+            Body=json.dumps(batch, default=str)
+        )
+        print(f"Uploaded batch to S3: {batch_key}")
+
+def run_etl_pipeline():
+    print("Starting ETL pipeline...")
+    
+    # Extract
+    print("Extracting data from source table...")
+    source_data = extract_data(SOURCE_TABLE_NAME, source_dynamodb)
+    print(f"Extracted {len(source_data)} items")
+
+    # Transform
+    print("Transforming data...")
+    transformed_data = transform_data(source_data)
+    print("Transformation complete")
+
+    # Load to DynamoDB
+    print("Loading data into destination DynamoDB table...")
+    load_data_to_dynamodb(transformed_data, DESTINATION_TABLE_NAME, destination_dynamodb)
+    print("Data loaded successfully to DynamoDB")
+
+    # Upload to S3
+    print("Uploading data to S3...")
+    upload_to_s3(transformed_data, S3_BUCKET_NAME, S3_KEY_PREFIX)
+    print("Data uploaded successfully to S3")
+
+    print("ETL pipeline completed")
+
+if __name__ == "__main__":
+    run_etl_pipeline()
