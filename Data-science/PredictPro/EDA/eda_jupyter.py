@@ -40,6 +40,4 @@ print(f'The minimum value in column is: {min_value}')
 # We will drop 'Gender', 'Age', 'Occupation', 'City_category', 'Stay_In_Current_City_Years' and 'Marital status' as our Model is not going to concentrate on those things
 df_dropped = df.drop(columns=['Gender','Age','Occupation','City_Category','Stay_In_Current_City_Years','Marital_Status'])
 print(df_dropped)
-
-# Output the file as csv, modify path
-df.to_csv('/content/eda_part_1.csv', index=False) 
+df_dropped.to_csv('/content/eda_part_1.csv', index=False)
